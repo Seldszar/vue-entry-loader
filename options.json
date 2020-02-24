@@ -1,0 +1,9 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "template": {
+      "type": "string"
+    }
+  }
+}

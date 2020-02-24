@@ -1,0 +1,37 @@
+{
+  "name": "@seldszar/vue-entry-loader",
+  "version": "0.0.0-development",
+  "description": "Yet another Vue entry loader for Webpack",
+  "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
+  "homepage": "https://github.com/seldszar/vue-entry-loader#readme",
+  "repository": "seldszar/vue-entry-loader",
+  "bugs": {
+    "url": "https://github.com/seldszar/vue-entry-loader/issues"
+  },
+  "scripts": {
+    "test": "xo && ava"
+  },
+  "files": [
+    "options.json",
+    "index.js"
+  ],
+  "keywords": [
+    "entry",
+    "loader",
+    "vue",
+    "webpack"
+  ],
+  "dependencies": {
+    "loader-utils": "^1.2.3",
+    "schema-utils": "^2.6.4"
+  },
+  "devDependencies": {
+    "ava": "^3.3.0",
+    "xo": "^0.26.1"
+  },
+  "xo": {
+    "files": [
+      "test/*"
+    ]
+  }
+}

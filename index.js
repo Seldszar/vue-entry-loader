@@ -41,11 +41,16 @@ function generateClient(context, codeSegment) {
 					? await codeSegment(Vue, App, "client")
 					: codeSegment;
 
-			new Vue({
-				el: document.getElementById("app"),
+			const vm = new Vue({
 				render: h => h(App),
 				...rootOptions,
 			});
+
+			if (typeof beforeMount === "function") {
+				await beforeMount(vm);
+			}
+
+			vm.$mount("#app");
 		}
 
 		main();
@@ -66,7 +71,7 @@ function loader() {
 		const templatePath = path.resolve(this.rootContext, options.template);
 
 		codeSegment = `
-      import codeSegment from ${JSON.stringify(templatePath)};
+      import codeSegment, { beforeMount } from ${JSON.stringify(templatePath)};
     `;
 	}
 

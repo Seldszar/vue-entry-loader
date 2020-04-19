@@ -4,6 +4,9 @@
   "properties": {
     "template": {
       "type": "string"
+    },
+    "selector": {
+      "type": "string"
     }
   }
 }

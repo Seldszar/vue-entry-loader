@@ -27,7 +27,7 @@ function generateServer(context, codeSegment) {
 	`;
 }
 
-function generateClient(context, codeSegment) {
+function generateClient(context, codeSegment, options) {
 	return `
 		import Vue from "vue";
 
@@ -50,7 +50,7 @@ function generateClient(context, codeSegment) {
 				await beforeMount(vm);
 			}
 
-			vm.$mount("#app");
+			vm.$mount(${options.selector || "#app"});
 		}
 
 		main();
@@ -78,7 +78,7 @@ function loader() {
 	const isServer = ['async-node', 'electron-main', 'node'].includes(this.target);
 	const generate = isServer ? generateServer : generateClient;
 
-	return generate(this, codeSegment);
+	return generate(this, codeSegment, options);
 }
 
 module.exports = loader;

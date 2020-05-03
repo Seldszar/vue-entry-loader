@@ -50,7 +50,7 @@ function generateClient(context, codeSegment, options) {
 				await beforeMount(vm);
 			}
 
-			vm.$mount(${options.selector || "#app"});
+			vm.$mount(${options.selector || JSON.stringify("#app")});
 		}
 
 		main();

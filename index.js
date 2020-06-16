@@ -1,5 +1,6 @@
 const loaderUtils = require('loader-utils');
 const path = require("path");
+const querystring = require('querystring');
 const validateOptions = require('schema-utils');
 
 const schema = require('./options.json');
@@ -81,4 +82,9 @@ function loader() {
 	return generate(this, codeSegment, options);
 }
 
+function format(entry, options) {
+	return `@seldszar/vue-entry-loader?${querystring.stringify(options)}!${entry}`;
+}
+
 module.exports = loader;
+module.exports.format = format;

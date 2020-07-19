@@ -1,5 +1,5 @@
 const loaderUtils = require('loader-utils');
-const path = require("path");
+const path = require('path');
 const querystring = require('querystring');
 const validateOptions = require('schema-utils');
 
@@ -51,7 +51,11 @@ function generateClient(context, codeSegment, options) {
 				await beforeMount(vm);
 			}
 
-			vm.$mount(${options.selector || JSON.stringify("#app")});
+			if (typeof App.beforeMount === "function") {
+				await App.beforeMount(vm);
+			}
+
+			vm.$mount(${options.selector || JSON.stringify('#app')});
 		}
 
 		main();
@@ -86,5 +90,47 @@ function format(entry, options) {
 	return `@seldszar/vue-entry-loader?${querystring.stringify(options)}!${entry}`;
 }
 
+class VueEntryPlugin {
+	constructor(options) {
+		validateOptions(schema, options, {
+			name: 'Vue Entry Plugin',
+			baseDataPath: 'options'
+		});
+
+		this.options = options;
+	}
+
+	apply({options}) {
+		const {entry} = options;
+
+		options.entry = typeof entry === 'function' ?
+			(async () => this.updateEntry(await entry())) :
+			this.updateEntry(entry);
+	}
+
+	isVueEntry(entry) {
+		return path.extname(entry) === '.vue';
+	}
+
+	updateEntry(entry) {
+		if (typeof entry === 'string' && this.isVueEntry(entry)) {
+			return format(entry, this.options);
+		}
+
+		if (Array.isArray(entry)) {
+			for (let index = 0; index < entry.length; index++) {
+				entry[index] = this.updateEntry(entry[index]);
+			}
+		} else if (typeof entry === 'object') {
+			for (const key in entry) {
+				entry[key] = this.updateEntry(entry[key]);
+			}
+		}
+
+		return entry;
+	}
+}
+
 module.exports = loader;
 module.exports.format = format;
+module.exports.VueEntryPlugin = VueEntryPlugin;

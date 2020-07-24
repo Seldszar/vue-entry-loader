@@ -184,7 +184,7 @@ class VueEntryPlugin {
 
 		return Array.isArray(this.options.test) ?
 			this.options.test.some(testPattern) :
-			testPattern(entry);
+			testPattern(this.options.test);
 	}
 
 	updateEntry(entry) {

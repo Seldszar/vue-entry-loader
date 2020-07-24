@@ -189,7 +189,10 @@ class VueEntryPlugin {
 
 	updateEntry(entry) {
 		if (typeof entry === 'string' && this.testEntry(entry)) {
-			return format(entry, this.options);
+			return format(entry, {
+				template: this.options.template,
+				selector: this.options.selector
+			});
 		}
 
 		if (Array.isArray(entry)) {

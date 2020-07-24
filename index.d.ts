@@ -5,6 +5,10 @@ export interface FormatOptions {
 
 export function format(entry: string, options?: FormatOptions): string;
 
+export interface VueEntryPluginOptions extends FormatOptions {
+  test: string | RegExp | Array<string | RegExp>;
+}
+
 export class VueEntryPlugin {
-  constructor(options: FormatOptions);
+  constructor(options?: VueEntryPluginOptions);
 }

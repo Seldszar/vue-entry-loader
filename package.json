@@ -5,6 +5,7 @@
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "homepage": "https://github.com/seldszar/vue-entry-loader#readme",
   "repository": "seldszar/vue-entry-loader",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/seldszar/vue-entry-loader/issues"
   },
@@ -12,8 +13,8 @@
     "test": "xo && ava"
   },
   "files": [
-    "options.json",
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "keywords": [
     "entry",
@@ -26,12 +27,28 @@
     "schema-utils": "^2.6.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "ava": "^3.3.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "xo": "^0.26.1"
   },
-  "xo": {
-    "files": [
-      "test/*"
+  "publishConfig": {
+    "access": "public"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "xo --fix"
   }
 }

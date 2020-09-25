@@ -59,7 +59,7 @@ function generateClient(context, codeSegment, options) {
 			});
 
 			if (typeof beforeMount === "function") {
-				await beforeMount(vm);
+				await beforeMount(vm, App);
 			}
 
 			if (typeof App.beforeMount === "function") {
